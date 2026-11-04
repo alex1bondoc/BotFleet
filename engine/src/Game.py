@@ -1,5 +1,6 @@
 from engine.src import MapGenerator, Bot
 import json
+import Message
 
 class Game:
     def __init__(self, seed: int, map_generator: MapGenerator, bot1_path: str, bot2_path: str):
@@ -13,23 +14,24 @@ class Game:
             response = bot.receive_message()
             if response.get("type") != "ack":
                 raise ValueError(f"Bot {player_id} did not acknowledge init message: {response}")
-        return {"status": "ok", "message": "Game started successfully."}
+
+
+
+        
 
     def init_message(self, player: int) -> str:
-        return json.dumps({
-            "type": "init",
-            "version": "1.0",
-            "player": player,
-            "seed": self.seed,
-            "size": len(self.map),
-            "grid": self.map,
-            "config": {
-                "max_turns": 500,
-                "move_budget": 1500,
-                "start_energy": 1000,
-                "ship_capacity": 100,
-                "ship_cost": 500,
-                "turn_timeout_ms": 1000,
-            },
-        })
+        return Message.InitMessage(
+            player=player,
+            seed=self.seed,
+            size=len(self.map),
+            grid=self.map,
+            config=Message.InitMessage.Config(
+                max_turns=100,
+                move_budget=10,
+                start_energy=1000,
+                ship_capacity=100,
+                ship_cost=100,
+                turn_timeout_ms=1000
+            )
+        ).to_json()
     
