@@ -4,11 +4,16 @@ import json
 class Game:
     def __init__(self, seed: int, map_generator: MapGenerator, bot1_path: str, bot2_path: str):
         self.seed = seed
-        self.bot_paths = {1 : bot1_path, 2 : bot2_path}
-        self.bots = {1 : Bot(bot1_path), 2 : Bot(bot2_path)}
+        self.bots = {1 : Bot(bot1_path, 1), 2 : Bot(bot2_path, 2)}
         self.map = map_generator.generate_map(seed=seed)
     def start(self) -> dict:
-        self.map = self.map_generator.generate_map(seed=self.seed)
+        for player_id, bot in self.bots.items():
+            init_msg = self.init_message(player_id)
+            bot.send_message(init_msg)
+            response = bot.receive_message()
+            if response.get("type") != "ack":
+                raise ValueError(f"Bot {player_id} did not acknowledge init message: {response}")
+        return {"status": "ok", "message": "Game started successfully."}
 
     def init_message(self, player: int) -> str:
         return json.dumps({
@@ -17,11 +22,7 @@ class Game:
             "player": player,
             "seed": self.seed,
             "size": len(self.map),
-            "grid": self.map,                    # -1 / 0 / energie
-            "bases": [
-                {"player": 1, "x": self.bases[1][0], "y": self.bases[1][1]},
-                {"player": 2, "x": self.bases[2][0], "y": self.bases[2][1]},
-            ],
+            "grid": self.map,
             "config": {
                 "max_turns": 500,
                 "move_budget": 1500,
