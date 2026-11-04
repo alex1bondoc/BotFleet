@@ -6,7 +6,7 @@ class BotError(Exception):
 DONE = False
 
 class Bot:
-    def __init__(self, bot_path: str):
+    def __init__(self, bot_path: str, player_id: int):
         cmd = self.prepare_bot(bot_path)
         try:
             self.process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -14,6 +14,18 @@ class Bot:
             raise BotError(f"Failed to start bot process: {e}")
         self.map_size = None
         self.map = None
+        self.timouts = 0
+        self.ships = []
+        self.energy = 1000
+        self.turn = 0
+        self.available_moves = None
+        if player_id not in [1, 2]:
+            raise BotError(f"Invalid player ID: {player_id}")
+        if player_id == 1:
+            self.base = (0, 0)
+        else:
+            self.base = (self.map_size - 1, self.map_size - 1)
+        ships = [Ship(capacity=100, x=self.base[0], y=self.base[1])]
     def prepare_bot(self, bot_path: str) -> list[str]:
         if (bot_path.endswith(".py")):
             return [sys.executable, bot_path]
@@ -25,17 +37,5 @@ class Bot:
                 raise BotError(f"Failed to compile C++ bot: {bot_path}")
             return [os.path.abspath(exec_name)]
 
-    def run(self) -> None:
-        get_map()
-        while not DONE:
-            
-
-
-    def get_map(self) -> None:
-        self.map_size = int(self.process.stdout.readline().strip())
-        self.map = [[0 for _ in range(self.map_size)] for _ in range(self.map_size)]
-        for i in range(self.map_size):
-            for j in range(self.map_size):
-                self.map[i][j] = int(self.process.stdout.readline().strip())
 
         
