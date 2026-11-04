@@ -1,12 +1,11 @@
 import random
 
-FREE, OBSTACLE, ENERGY = 0, 1, 2
+FREE, OBSTACLE, ENERGY = 0, -1, 100
 OBSTACLE_PROBABILITY = 10
 ENERGY_PROBABILITY = 6
 
 class MapGenerator:
-    def __init__(self, seed:int, size: int):
-        self.seed = seed
+    def __init__(self, size: int):
         self.size = size
         self.energy_count = 0
 
