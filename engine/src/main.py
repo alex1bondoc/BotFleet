@@ -15,7 +15,37 @@ if __name__ == "__main__":
     game = Game(seed=42, bot1_path=bot_py, bot2_path=bot_cpp, config=config)
 
     winner, reason = game.start()
+    print("____________________________________________________________")
+    print(f"Game over — winner: Player {winner} ({reason})")
+    print(f"Score  : P1={game.base_energy[1]}  P2={game.base_energy[2]}")
+    print(f"Ships  : P1={len(game.ships[1])}  P2={len(game.ships[2])}")
+    print(f"Budgets: P1={game.move_budget[1]}  P2={game.move_budget[2]}")
 
+    config = GameConfig()
+    game = Game(seed=42, bot1_path=bot_py, bot2_path=bot_py, config=config)
+    winner, reason = game.start()
+    print("____________________________________________________________")
+    
+    print(f"Game over — winner: Player {winner} ({reason})")
+    print(f"Score  : P1={game.base_energy[1]}  P2={game.base_energy[2]}")
+    print(f"Ships  : P1={len(game.ships[1])}  P2={len(game.ships[2])}")
+    print(f"Budgets: P1={game.move_budget[1]}  P2={game.move_budget[2]}")
+
+    config = GameConfig()
+    game = Game(seed=42, bot1_path=bot_cpp, bot2_path=bot_py, config=config)
+    winner, reason = game.start()
+    print("____________________________________________________________")
+    
+    print(f"Game over — winner: Player {winner} ({reason})")
+    print(f"Score  : P1={game.base_energy[1]}  P2={game.base_energy[2]}")
+    print(f"Ships  : P1={len(game.ships[1])}  P2={len(game.ships[2])}")
+    print(f"Budgets: P1={game.move_budget[1]}  P2={game.move_budget[2]}")
+
+    config = GameConfig()
+    game = Game(seed=42, bot1_path=bot_cpp, bot2_path=bot_cpp, config=config)
+    winner, reason = game.start()
+    print("____________________________________________________________")
+    
     print(f"Game over — winner: Player {winner} ({reason})")
     print(f"Score  : P1={game.base_energy[1]}  P2={game.base_energy[2]}")
     print(f"Ships  : P1={len(game.ships[1])}  P2={len(game.ships[2])}")

@@ -151,6 +151,8 @@ class Game:
     # --- game logic ---
 
     def _is_over(self) -> bool:
+        if self._eliminated[1] and self._eliminated[2]:
+            return True
         if any(self.move_budget[p] > 0 for p in [1, 2]):
             return False
         for pid in [1, 2]:

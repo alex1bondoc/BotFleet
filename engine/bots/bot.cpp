@@ -72,7 +72,7 @@ int main() {
     std::getline(std::cin, line);
 
     int player = get_int(line, "player");
-    int seed   = get_int(line, "seed");
+    int seed   = 1;
     srand(static_cast<unsigned>(seed));
 
     // Acknowledge init
