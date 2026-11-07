@@ -22,9 +22,9 @@ class InitMessage(Message):
 
     player: int
     seed: int
-    size:int
+    size: int
     grid: list[list[int]]
-    config: Config = field(default_factory=Config)
+    config: Config
 
 @dataclass
 class AckMessage(Message):
@@ -36,7 +36,6 @@ class CommandMessage(Message):
     TYPE = "command"
     player: int
     commands: list[str]
-    ships: list[dict] = field(default_factory=list)
     build: bool = False
 
 @dataclass
@@ -45,10 +44,9 @@ class UpdateMessage(Message):
     player: int
     turn: int
     energy: int
-    players = list[dict]
-    ships = list[dict]
-    deposits_changed = list[dict]
-    events = list[dict] = field(default_factory=list)
+    ships: list[dict] = field(default_factory=list)
+    deposits_changed: list[dict] = field(default_factory=list)
+    events: list[dict] = field(default_factory=list)
 
 @dataclass
 class DoneMessage(Message):

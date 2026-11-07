@@ -1,12 +1,20 @@
 import random
 
-FREE, OBSTACLE, ENERGY = 0, -1, 100
-OBSTACLE_PROBABILITY = 10
-ENERGY_PROBABILITY = 6
+FREE = 0
+OBSTACLE = -1
 
 class MapGenerator:
-    def __init__(self, size: int):
+    def __init__(
+        self,
+        size: int,
+        obstacle_probability: int = 10,
+        energy_probability: int = 6,
+        deposit_energy: int = 100,
+    ):
         self.size = size
+        self.obstacle_probability = obstacle_probability
+        self.energy_probability = energy_probability
+        self.deposit_energy = deposit_energy
         self.energy_count = 0
 
     def generate_map(self, seed: int) -> list[list[int]]:
@@ -15,10 +23,10 @@ class MapGenerator:
         for y in range(self.size):
             for x in range(self.size // 2 + self.size % 2):
                 r = rnd.randint(0, 99)
-                if r < OBSTACLE_PROBABILITY:
+                if r < self.obstacle_probability:
                     map[y][x] = OBSTACLE
-                elif r < OBSTACLE_PROBABILITY + ENERGY_PROBABILITY:
-                    map[y][x] = ENERGY
+                elif r < self.obstacle_probability + self.energy_probability:
+                    map[y][x] = self.deposit_energy
                     self.energy_count += 1
         map[0][0] = FREE
         for y in range(self.size):
