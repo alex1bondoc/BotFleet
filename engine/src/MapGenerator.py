@@ -50,7 +50,7 @@ class MapGenerator:
         cnt = 0
         while queue:
             x, y = queue.pop(0)
-            if map[y][x] == ENERGY:
+            if map[y][x] > 0:
                 cnt += 1
             for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
                 nx, ny = x + dx, y + dy
