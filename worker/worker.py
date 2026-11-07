@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 
 RABBITMQ_URL = os.environ.get("RABBITMQ_URL", "amqp://guest:guest@localhost/")
 QUEUE_NAME   = os.environ.get("QUEUE_NAME",   "games")
-HISTORY_DIR  = os.environ.get("HISTORY_DIR",  "/tmp/histories")
+HISTORY_DIR  = os.environ.get("HISTORY_DIR",  "/tmp/games")
 MAX_RETRIES  = int(os.environ.get("MAX_RETRIES", 3))
 
 os.makedirs(HISTORY_DIR, exist_ok=True)

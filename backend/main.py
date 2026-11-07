@@ -13,7 +13,7 @@ BOTS_DIR    = os.environ.get("BOTS_DIR",    "/tmp/bots")
 HISTORY_DIR = os.environ.get("HISTORY_DIR", "/tmp/games")
 
 os.makedirs(BOTS_DIR, exist_ok=True)
-os.makedevirs(HISTORY_DIR, exist_ok=True)  
+os.makedirs(HISTORY_DIR, exist_ok=True)
 app = FastAPI()
 db  = Database()
 
